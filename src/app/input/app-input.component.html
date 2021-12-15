@@ -1,0 +1,7 @@
+<div class = "input-container">
+    <label>{{title}}</label>
+    <label for="inp" class="inp">
+        <input type="text" [(ngModel)]="inputModel" (ngModelChange)="inputModelChange.emit(inputModel)">
+        <span class="focus-bg"></span>
+    </label>
+</div>
