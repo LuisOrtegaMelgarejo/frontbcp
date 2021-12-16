@@ -9,7 +9,7 @@ export class TokenService  extends HttpService  {
 
     async getJWT(): Promise<any> {
         try{
-            const result = await this.http.post(this.url.concat('/login'),{username: "bcp",password:"password"}).toPromise();
+            const result = await this.http.post(this.url.concat('/login'),{username: "bcp",password:"password"},{observe: 'response'}).toPromise();
             return Promise.resolve(result)
         } catch (err) {
             return Promise.reject(err);
@@ -18,7 +18,8 @@ export class TokenService  extends HttpService  {
 
     async loadJWT(): Promise<void> {
         const jwt = await this.getJWT();
-        this.jwt$.next(jwt.token);
+        const token = jwt.headers.get('Authorization');
+        this.jwt$.next(token.substr(8));
     }
 
     getJWTObservable(): Observable<string> {
